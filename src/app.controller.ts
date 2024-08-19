@@ -16,6 +16,7 @@ import {
 } from '@nestjs/platform-express';
 
 import { storage } from './storage';
+import { FileSizeValidationPipe } from './file-size-validation-pipe';
 
 @Controller()
 export class AppController {
@@ -104,5 +105,19 @@ export class AppController {
   ) {
     console.log('body---', body);
     console.log('files---', files);
+  }
+
+  @Post('fff')
+  @UseInterceptors(
+    FileInterceptor('aaa', {
+      dest: 'uploads',
+    }),
+  )
+  uploadFile2(
+    @UploadedFile(FileSizeValidationPipe) file: Express.Multer.File,
+    @Body() body,
+  ) {
+    console.log('body---', body);
+    console.log('file---', file);
   }
 }
