@@ -5,9 +5,10 @@ import {
   UploadedFile,
   UseInterceptors,
   Body,
+  UploadedFiles,
 } from '@nestjs/common';
 import { AppService } from './app.service';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller()
 export class AppController {
@@ -18,6 +19,7 @@ export class AppController {
     return this.appService.getHello();
   }
 
+  // 单文件上传
   @Post('aaa')
   @UseInterceptors(
     // 使用FileInterceptor来提取aaa字段 然后通过UploadedFile装饰器把它作为参数传入
@@ -28,5 +30,20 @@ export class AppController {
   uploadFile(@UploadedFile() file: Express.Multer.File, @Body() body) {
     console.log('body---', body);
     console.log('file---', file);
+  }
+
+  // 多文件上传
+  @Post('bbb')
+  @UseInterceptors(
+    FilesInterceptor('bbb', 3, {
+      dest: 'myUploads',
+    }),
+  )
+  uploadFiles(
+    @UploadedFiles() files: Array<Express.Multer.File>,
+    @Body() body,
+  ) {
+    console.log('body---', body);
+    console.log('files---', files);
   }
 }
