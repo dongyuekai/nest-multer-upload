@@ -15,6 +15,8 @@ import {
   FilesInterceptor,
 } from '@nestjs/platform-express';
 
+import { storage } from './storage';
+
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
@@ -82,6 +84,21 @@ export class AppController {
     }),
   )
   uploadAnyFiles(
+    @UploadedFiles() files: Array<Express.Multer.File>,
+    @Body() body,
+  ) {
+    console.log('body---', body);
+    console.log('files---', files);
+  }
+
+  // storage实现文件保存后的改名等
+  @Post('eee')
+  @UseInterceptors(
+    AnyFilesInterceptor({
+      storage: storage,
+    }),
+  )
+  uploadAnyFilesWithStorage(
     @UploadedFiles() files: Array<Express.Multer.File>,
     @Body() body,
   ) {
