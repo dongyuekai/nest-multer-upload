@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import {
+  AnyFilesInterceptor,
   FileFieldsInterceptor,
   FileInterceptor,
   FilesInterceptor,
@@ -67,6 +68,21 @@ export class AppController {
   uploadFileFields(
     @UploadedFiles()
     files: { aaa?: Express.Multer.File[]; bbb?: Express.Multer.File[] },
+    @Body() body,
+  ) {
+    console.log('body---', body);
+    console.log('files---', files);
+  }
+
+  // 不知道有哪些字段是file
+  @Post('ddd')
+  @UseInterceptors(
+    AnyFilesInterceptor({
+      dest: 'uploads',
+    }),
+  )
+  uploadAnyFiles(
+    @UploadedFiles() files: Array<Express.Multer.File>,
     @Body() body,
   ) {
     console.log('body---', body);

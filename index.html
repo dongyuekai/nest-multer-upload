@@ -42,16 +42,30 @@
         //     }
 
         // 多个文件字段
-        async function formData3() {
+            //   async function formData3() {
+            //     const data = new FormData()
+            //     data.set('name', '光');
+            //     data.set('age', 20);
+            //   data.append('aaa', fileInput.files[0]);
+            //   data.append('aaa', fileInput.files[1]);
+            //   data.append('bbb', fileInput.files[2]);
+            //   data.append('bbb', fileInput.files[3]);
+            //   const res = await axios.post('http://localhost:3000/ccc', data);
+            //   console.log(res);
+            // }
+
+            // 并不知道有哪些字段是file
+            async function formData4() {
           const data = new FormData()
-          data.set('name', '光');
-    data.set('age', 20);
-        data.append('aaa', fileInput.files[0]);
-        data.append('aaa', fileInput.files[1]);
-        data.append('bbb', fileInput.files[2]);
-        data.append('bbb', fileInput.files[3]);
-        const res = await axios.post('http://localhost:3000/ccc', data);
-        console.log(res);
+            data.set('name', '光')
+            data.set('age', 20)
+            data.set('aaa', fileInput.files[0]);
+            data.set('bbb', fileInput.files[1]);
+            data.set('ccc', fileInput.files[2]);
+            data.set('ddd', fileInput.files[3]);
+
+            const res = await axios.post('http://localhost:3000/ddd', data);
+            console.log(res);
       }
 
     fileInput.onchange = formData3
